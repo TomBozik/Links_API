@@ -30,7 +30,7 @@ class LoginController extends Controller
     }
 
 
-    public function logout()
+    public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
 
