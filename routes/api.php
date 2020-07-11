@@ -23,4 +23,8 @@ Route::post('/login', 'LoginController@login');
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/logout', 'LoginController@logout');
+    Route::get('/category', 'CategoryController@index');
+    Route::post('/category', 'CategoryController@store');
+    Route::get('/resource', 'ResourceController@index');
+    Route::post('/resource', 'ResourceController@store');
 });
