@@ -25,6 +25,12 @@ class CategoryService
         } else{
             abort(response()->json(['error' => 'Category already exists.'], 402));
         }
+    }
 
+
+    public function deleteCategory($category)
+    {
+        $category->resources()->forceDelete();
+        $category->forceDelete();
     }
 }

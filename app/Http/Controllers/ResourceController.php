@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Services\ResourceService;
 use App\Http\Resources\ResourceResource;
+use App\Resource;
 
 use Illuminate\Http\Request;
 
@@ -12,17 +13,15 @@ class ResourceController extends Controller
     {
         $authUser = $request->user();
         $categoryId = $request->query('category');
-
         $resourceService = new ResourceService();
         $resources = $resourceService->getUserResources($authUser, $categoryId);
-
         return ResourceResource::collection($resources);
     }
+
 
     public function store(Request $request)
     {
         $authUser = $request->user();
-
         $data = request()->validate([
             'name' => ['required'],
             'description' => ['required'],
@@ -30,10 +29,37 @@ class ResourceController extends Controller
             'category_id' => ['required'],
             
         ]);
-
         $resourceService = new ResourceService();
-        $resources = $resourceService->createResource($authUser, $data);
-
-        return ResourceResource::collection($resources);
+        $resource = $resourceService->createResource($authUser, $data);
+        return new ResourceResource($resource);
     }
+
+
+    public function update(Request $request, $id)
+    {
+        $authUser = $request->user();
+        $resource = Resource::findOrFail($id);
+        // TODO: check if user can update
+        $data = request()->validate([
+            'id' => ['required'],
+            'name' => ['required'],
+            'description' => ['required'],
+            'url' => ['required', 'url'],
+            'category_id' => ['required'],
+        ]);
+        $resourceService = new ResourceService();
+        $updatedResource = $resourceService->updateResource($resource, $data);
+        return new ResourceResource($updatedResource);
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        $authUser = $request->user();
+        $resource = Resource::findOrFail($id);
+        // TODO: check if user can delete
+        $resourceService = new ResourceService();
+        $resourceService->deleteResource($resource);
+        return response()->json(null, 204);
+    }
+
 }

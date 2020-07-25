@@ -11,18 +11,28 @@ class ResourceService
         return Resource::where('user_id', $user->id)->where('category_id', $categoryId)->get();
     }
 
+
     public function createResource($user, $data)
     {
-
-        Resource::create([
+        $resource = Resource::create([
             'name' => $data['name'],
             'description' => $data['description'],
             'url' => $data['url'],
             'category_id' => $data['category_id'],
             'user_id' => $user->id
         ]);
+        return $resource;
+    }
 
-        return $this->getUserResources($user, $data['category_id']);
 
+    public function updateResource($resource, $data)
+    {
+        return tap($resource)->update($data);
+    }
+
+
+    public function deleteResource($resource)
+    {
+        $resource->delete();
     }
 }

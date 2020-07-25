@@ -23,8 +23,13 @@ Route::post('/login', 'LoginController@login');
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/logout', 'LoginController@logout');
-    Route::get('/category', 'CategoryController@index');
-    Route::post('/category', 'CategoryController@store');
-    Route::get('/resource', 'ResourceController@index');
-    Route::post('/resource', 'ResourceController@store');
+
+    Route::get('/category', 'CategoryController@index');            // get all categories
+    Route::post('/category', 'CategoryController@store');           // create new category
+    Route::delete('/category/{id}', 'CategoryController@destroy');  // delete category
+
+    Route::get('/resource', 'ResourceController@index');            // get all resources from category (?category={id})
+    Route::post('/resource', 'ResourceController@store');           // create new resource
+    Route::put('/resource/{id}', 'ResourceController@update');      // update resource
+    Route::delete('/resource/{id}', 'ResourceController@destroy');  // delete resource
 });
