@@ -13,18 +13,17 @@ class CategoryService
 
     public function createCategory($user, $categoryName)
     {
-        $userCategories = $this->getUserCategories($user);
-        $categoriesNames = $userCategories->pluck('name')->toArray();
+        $category = Category::where('user_id', $user->id)->where('name', $categoryName)->get();
 
-        if(!in_array($categoryName, $categoriesNames)){
-            $category = Category::create([
-                'name' => $categoryName,
-                'user_id' => $user->id
-            ]);
-            return $this->getUserCategories($user);
-        } else{
+        if (count($category) > 0){
             abort(response()->json(['error' => 'Category already exists.'], 402));
         }
+        
+        Category::create([
+            'name' => $categoryName,
+            'user_id' => $user->id
+        ]);
+        return $this->getUserCategories($user);
     }
 
 

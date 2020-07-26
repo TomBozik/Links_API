@@ -27,7 +27,7 @@ class ResourceController extends Controller
             'description' => ['required'],
             'url' => ['required', 'url'],
             'category_id' => ['required'],
-            
+            'tags' => ['required']
         ]);
         $resourceService = new ResourceService();
         $resource = $resourceService->createResource($authUser, $data);
@@ -46,9 +46,10 @@ class ResourceController extends Controller
             'description' => ['required'],
             'url' => ['required', 'url'],
             'category_id' => ['required'],
+            'tags' => ['required'],
         ]);
         $resourceService = new ResourceService();
-        $updatedResource = $resourceService->updateResource($resource, $data);
+        $updatedResource = $resourceService->updateResource($authUser, $resource, $data);
         return new ResourceResource($updatedResource);
     }
 

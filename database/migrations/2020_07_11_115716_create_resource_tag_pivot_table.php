@@ -14,8 +14,8 @@ class CreateResourceTagPivotTable extends Migration
     public function up()
     {
         Schema::create('resource_tag', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->foreignId('resource_id');
+            $table->foreignId('tag_id');
         });
     }
 

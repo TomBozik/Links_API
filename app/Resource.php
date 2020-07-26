@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Resource extends Model
 {
+    protected $hidden = ['pivot'];
+    
     protected $fillable = [
         'name', 'description', 'url', 'category_id', 'user_id'
     ];

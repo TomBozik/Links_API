@@ -14,6 +14,7 @@ class ResourceResource extends JsonResource
             'url' => $this->url,
             'description' => $this->description,
             'category_id' => $this->category_id,
+            'tags' => $this->tags,
         ];
     }
 }
