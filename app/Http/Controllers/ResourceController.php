@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Services\ResourceService;
 use App\Http\Resources\ResourceResource;
 use App\Resource;
+use App\Exports\ResourceExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 use Illuminate\Http\Request;
 
@@ -61,6 +63,12 @@ class ResourceController extends Controller
         $resourceService = new ResourceService();
         $resourceService->deleteResource($resource);
         return response()->json(null, 204);
+    }
+
+    public function export(request $request)
+    {
+        $authUser = $request->user();
+        return Excel::download(new ResourceExport($authUser->id), 'links.csv');
     }
 
 }
