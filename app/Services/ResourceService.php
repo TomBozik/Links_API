@@ -9,8 +9,13 @@ class ResourceService
 {
     public function getUserResources($user, $categoryId)
     {
-        return Resource::with('tags')->where('user_id', $user->id)->where('category_id', $categoryId)->get();
-    }
+        return Resource::with('tags')
+            ->where('user_id', $user->id)
+            ->where('category_id', $categoryId)
+            ->latest()
+            ->paginate(10)
+            ->appends('category', $categoryId);
+}
 
 
     public function createResource($user, $data)

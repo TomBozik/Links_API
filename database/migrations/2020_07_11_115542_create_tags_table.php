@@ -18,6 +18,8 @@ class CreateTagsTable extends Migration
             $table->foreignId('user_id');
             $table->string('name');
             $table->timestamps();
+
+            $table->index(['user_id']);
         });
     }
 
