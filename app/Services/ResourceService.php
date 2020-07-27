@@ -13,7 +13,7 @@ class ResourceService
             ->where('user_id', $user->id)
             ->where('category_id', $categoryId)
             ->latest()
-            ->paginate(10)
+            ->paginate(5)
             ->appends('category', $categoryId);
 }
 

@@ -32,5 +32,8 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/resource', 'ResourceController@store');           // create new resource
     Route::put('/resource/{id}', 'ResourceController@update');      // update resource
     Route::delete('/resource/{id}', 'ResourceController@destroy');  // delete resource
+
+    Route::get('/tag', 'TagController@index');                     // get all user tags
+
     Route::get('/export', 'ResourceController@export');             // export user resources
 });

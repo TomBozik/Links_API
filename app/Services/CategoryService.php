@@ -8,7 +8,7 @@ class CategoryService
 {
     public function getUserCategories($user)
     {
-        return Category::where('user_id', $user->id)->get();
+        return Category::where('user_id', $user->id)->orderBy('name', 'ASC')->get();
     }
 
     public function createCategory($user, $categoryName)

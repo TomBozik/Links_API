@@ -11,6 +11,7 @@ class TagService
         return Tag::where('user_id', $user->id)->get();
     }
 
+
     public function createTag($user, $tagName)
     {
         return Tag::firstOrCreate(
@@ -19,10 +20,4 @@ class TagService
         );
     }
 
-
-    public function deleteCategory($category)
-    {
-        $category->resources()->forceDelete();
-        $category->forceDelete();
-    }
 }
