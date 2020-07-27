@@ -7,15 +7,23 @@ use App\Services\TagService;
 
 class ResourceService
 {
-    public function getUserResources($user, $categoryId)
+    public function getUserResources($user, $categoryId, $tags)
     {
-        return Resource::with('tags')
-            ->where('user_id', $user->id)
-            ->where('category_id', $categoryId)
-            ->latest()
-            ->paginate(5)
-            ->appends('category', $categoryId);
-}
+        $resources = Resource::with('tags')
+                        ->where('user_id', $user->id)
+                        ->where('category_id', $categoryId)
+                        ->latest();
+
+        if(!empty($tags)){
+            foreach($tags as $tagName){
+                $resources->whereHas('tags', function($q) use ($tagName){
+                    $q->where('name', $tagName);
+                });
+            }
+        }
+
+        return $resources->paginate(5)->appends('category', $categoryId);
+    }
 
 
     public function createResource($user, $data)

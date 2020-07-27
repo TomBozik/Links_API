@@ -15,8 +15,9 @@ class ResourceController extends Controller
     {
         $authUser = $request->user();
         $categoryId = $request->query('category');
+        $tags = $request->query('tags');
         $resourceService = new ResourceService();
-        $resources = $resourceService->getUserResources($authUser, $categoryId);
+        $resources = $resourceService->getUserResources($authUser, $categoryId, $tags);
         return ResourceResource::collection($resources);
     }
 
