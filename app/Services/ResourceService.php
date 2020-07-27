@@ -22,7 +22,7 @@ class ResourceService
             }
         }
 
-        return $resources->paginate(5)->appends('category', $categoryId);
+        return $resources->paginate(6)->appends('category', $categoryId);
     }
 
 

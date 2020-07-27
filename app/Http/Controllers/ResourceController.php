@@ -27,7 +27,7 @@ class ResourceController extends Controller
         $authUser = $request->user();
         $data = request()->validate([
             'name' => ['required'],
-            'description' => ['required'],
+            'description' => [''],
             'url' => ['required', 'url'],
             'category_id' => ['required'],
             'tags' => ['required']
@@ -46,7 +46,7 @@ class ResourceController extends Controller
         $data = request()->validate([
             'id' => ['required'],
             'name' => ['required'],
-            'description' => ['required'],
+            'description' => [''],
             'url' => ['required', 'url'],
             'category_id' => ['required'],
             'tags' => ['required'],
