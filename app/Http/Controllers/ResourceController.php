@@ -66,10 +66,19 @@ class ResourceController extends Controller
         return response()->json(null, 204);
     }
 
-    public function export(request $request)
+    public function export(Request $request)
     {
         $authUser = $request->user();
         return Excel::download(new ResourceExport($authUser->id), 'links.csv');
+    }
+
+    public function import(Request $request)
+    {
+        $authUser = $request->user();
+        $file = $request->file('file');
+        $resourceService = new ResourceService();
+        $resourceService->importResources($authUser,$file);
+        return response()->json(null, 200);
     }
 
 }

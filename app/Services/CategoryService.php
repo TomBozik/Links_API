@@ -11,6 +11,8 @@ class CategoryService
         return Category::where('user_id', $user->id)->orderBy('name', 'ASC')->get();
     }
 
+    
+    // For API
     public function createCategory($user, $categoryName)
     {
         $category = Category::where('user_id', $user->id)->where('name', $categoryName)->get();
@@ -24,6 +26,15 @@ class CategoryService
             'user_id' => $user->id
         ]);
         return $this->getUserCategories($user);
+    }
+
+
+    // For ResourceService
+    public function createOrFindUserCategory($user, $categoryName){
+        return Category::firstOrCreate(
+            ['user_id' => $user->id, 'name' => $categoryName],
+            ['user_id' => $user->id, 'name' => $categoryName]
+        );
     }
 
 
