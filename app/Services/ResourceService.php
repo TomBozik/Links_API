@@ -90,17 +90,22 @@ class ResourceService
         $categories = [];
         $tags = [];
 
-        $h = fopen($file, "r");
-        fgetcsv($h, 1000, ","); // headers
-        while (($data = fgetcsv($h, 1000, ",")) !== FALSE) 
-        {
-            array_push($resource_names, $data[0]);
-            array_push($urls, $data[1]);
-            array_push($descriptions, $data[2]);
-            array_push($categories, $data[3]);
-            array_push($tags, $data[4]);
+        try {
+            $h = fopen($file, "r");
+            fgetcsv($h, 1000, ","); // headers
+            while (($data = fgetcsv($h, 1000, ",")) !== FALSE) 
+            {
+                array_push($resource_names, $data[0]);
+                array_push($urls, $data[1]);
+                array_push($descriptions, $data[2]);
+                array_push($categories, $data[3]);
+                array_push($tags, $data[4]);
+            }
+            fclose($h);
         }
-        fclose($h);
+        catch (\Throwable $t) {
+            abort(response()->json(['error' => 'Error'], 422));
+        }
 
         $categoryService = new CategoryService();
         $tagService = new TagService();
