@@ -121,7 +121,7 @@ class ResourceService
 
             $tags[$i] = explode(",",$tags[$i]);
             $data['tags'] = array_map(function($tag){
-                return str_replace(array("[","]"), "", $tag);
+                return str_replace(array("[","]",'"'), "", $tag);
             },$tags[$i]);
 
             $this->createResource($user, $data);
